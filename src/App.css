@@ -27,6 +27,7 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .chatbot-main-container {
@@ -40,6 +41,8 @@ html {
 }
 
 .close-bot-container {
+  max-width: 400px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
