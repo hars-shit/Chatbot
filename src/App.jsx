@@ -238,7 +238,7 @@ const Chatbot = () => {
                       </div>
                       <div className="message-container">
                         <div className="avatar">
-                          <img src="/logo.png" alt="bot" />
+                          <img src="./logo.png" alt="bot" />
                         </div>
                         <div className="message-time-avatar">{msg.time}</div>
                       </div>
