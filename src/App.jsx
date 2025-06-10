@@ -189,7 +189,7 @@ const Chatbot = () => {
                     <img src="./Black.png" alt="" />
                   </div>
                   <div>
-                    <h3 style={{ fontSize: "24px", margin: 0 }}>Mortem AI</h3>
+                    <h3 style={{ fontSize: "24px", margin: 0 }}>Sarah</h3>
                     <span className="chatbot-status">● Online</span>
                   </div>
                 </div>
