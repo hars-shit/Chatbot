@@ -22,7 +22,7 @@ html {
 }
 
 .main-container {
-  height: 100vh;
+  height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -52,7 +52,7 @@ html {
   /* position: absolute;
   right: 0px;
   transform: translateX(-10%); */
-  background: var(--primary-bg-color);
+  background: rgba(67, 97, 238, 1);
   color: #fff;
   border: none;
   padding: 10px;
@@ -116,13 +116,12 @@ html {
   width: 100%;
   max-width: 300px;
   height: auto;
-  background: var(--primary-bg-color);
+  background: rgba(104, 168, 235, 1);
 
 }
 
 .talk-options {
   margin-top: 10px;
-
   display: flex;
   gap: 10px;
   width: 100%;
@@ -137,13 +136,13 @@ html {
   border: transparent;
   text-align: left;
   padding: 10px 15px;
-  font-size: 15px;
+  font-size: 14px;
   border-radius: 5px;
 }
 
 .talk-options button:hover {
-  background-color: rgba(75, 93, 127, 1);
-  color: rgba(249, 228, 153, 1);
+  background-color: rgba(0, 35, 72, 1);
+  color: rgba(251, 188, 5, 1);
 }
 
 .talk-bubble-user {
@@ -170,7 +169,7 @@ html {
   top: auto;
   bottom: -20px;
   border: 22px solid;
-  border-color: transparent transparent transparent var(--primary-bg-color);
+  border-color: transparent transparent transparent rgba(104, 168, 235, 1);
 }
 
 .tri-right.border.btm-left:before {
@@ -187,8 +186,8 @@ html {
 }
 
 .talktext {
-
-  color: var(--primary-text-color);
+  font-size: 14px;
+  color: white;
   text-align: left;
   line-height: 1.5em;
   word-break: break-word;
@@ -288,14 +287,15 @@ html {
   border: none;
   border-radius: 20px;
   outline: none;
-  font-size: 0.95em;
+  color:rgba(68, 68, 68, 1);
+  font-size: 18px;
 }
 
 .send-button {
   margin-left: 10px;
   padding: 10px 14px;
   border: none;
-  color: var(--primary-bg-color);
+  color: rgba(67, 97, 238, 1);
   cursor: pointer;
   background-color: transparent;
   font-size: 1.6em;
@@ -320,7 +320,7 @@ html {
 .send-button:hover {
   color: white;
   border-radius: 50%;
-  background-color: var(--primary-bg-color)CC;
+  background-color: rgb(67 97 238);
 }
 
 

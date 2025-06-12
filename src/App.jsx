@@ -46,15 +46,19 @@ const Chatbot = () => {
 
 
   // adding a unique string inn the last_name 
-  const getIPAddress = async () => {
-    try {
-      const res = await fetch("https://api.ipify.org?format=json");
-      const data = await res.json();
-      return data.ip;
-    } catch {
-      return "unknown_ip";
-    }
-  };
+  // const getIPAddress = async () => {
+  //   try {
+  //     const res = await fetch("https://api.ipify.org?format=json");
+  //     const data = await res.json();
+  //     return data.ip;
+  //   } catch {
+  //     return "unknown_ip";
+  //   }
+  // };
+
+  const get_unique_key=()=>{
+   return Math.random().toString(36).substring(2,8)
+  }
 
   useEffect(() => {
     scrollToBottom();
@@ -78,7 +82,8 @@ const Chatbot = () => {
     ]);
     setInput('');
 
-    const ip = await getIPAddress();
+    // const ip = await getIPAddress();
+    const unique_key=get_unique_key()
     const basePayload = {
       // payload data
       tags: "ai response,immediate need - entry",
@@ -102,7 +107,7 @@ const Chatbot = () => {
         name: "Customer Replied > Set Channel > Send Webhook",
       },
       full_name: "Guest Visitor qxdxg",
-      last_name: `Visitor_${ip}`,
+      last_name: `Visitor_${unique_key}`,
       customData: {},
       first_name: "Guest",
       triggerData: {},
@@ -277,7 +282,7 @@ const Chatbot = () => {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
                 />
-                <button className="send-button" onClick={sendMessage}>➤</button>
+                <button className="send-button" onClick={()=>sendMessage()}>➤</button>
               </div>
             </div>
           </div>
