@@ -10,9 +10,12 @@ const getTime = () =>
   new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
 const Chatbot = () => {
-  const messageRef = useRef(null);
+  const bodyRef = useRef(null);
+ 
   const scrollToBottom = () => {
-    messageRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (bodyRef.current) {
+      bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
+    }
   };
 
   const [messages, setMessages] = useState([
@@ -125,7 +128,7 @@ const Chatbot = () => {
     const payload = contactId ? { ...basePayload, contact_id: contactId } : basePayload
 
     try {
-      const res = await fetch('http://54.204.221.74/api/inbound/?bot=asst_zkMH7Fjxv166GWoqlYj20C1t', {
+      const res = await fetch('https://go.thomascmagee.com/api/inbound/?bot=asst_zkMH7Fjxv166GWoqlYj20C1t', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -217,7 +220,7 @@ const Chatbot = () => {
               </div>
             </div>
 
-            <div className="chatbot-body">
+            <div className="chatbot-body" ref={bodyRef}>
               {messages.map((msg, id) => (
                 <div className={`${msg.type}`} key={id}>
                   {msg.type === 'bot' ? (
@@ -269,7 +272,7 @@ const Chatbot = () => {
                   )}
                 </div>
               ))}
-              <div ref={messageRef} />
+              {/* <div ref={messageRef} /> */}
             </div>
 
             <div className="chatbot-input">
@@ -296,7 +299,7 @@ const Chatbot = () => {
             botVisible ?
               <MdOutlineKeyboardArrowDown />
               :
-             <img src="./Black.png" alt="" />
+             <img style={{width:"25px",height:"25px"}} src="./Black.png" alt="" />
           }
         </button>
       </div>
