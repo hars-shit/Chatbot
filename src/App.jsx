@@ -41,7 +41,7 @@ const Chatbot = () => {
 
   const [input, setInput] = useState('');
   const [showHeader, setShowHeader] = useState(true);
-  const [botVisible, setBotVisible] = useState(true);
+  // const [botVisible, setBotVisible] = useState(true);
   // const [contactId,setContactId]=useState(()=>{
   //   return localStorage.getItem('mortem_contact_id') || null ;
   // })
@@ -188,7 +188,7 @@ const Chatbot = () => {
   return (
     <div className='main-container'>
       <div className='chatbot-main-container'>
-        {botVisible &&
+      
           <div className="chatbot-wrapper">
             <div className="chatbot-header">
               {showHeader && (
@@ -289,11 +289,11 @@ const Chatbot = () => {
               </div>
             </div>
           </div>
-        }
+        
 
 
       </div>
-      <div className='close-bot-container'>
+      {/* <div className='close-bot-container'>
         <button className="close-bot-button" onClick={() => setBotVisible(pre => !pre)}>
           {
             botVisible ?
@@ -302,7 +302,7 @@ const Chatbot = () => {
              <img style={{width:"25px",height:"25px"}} src="./Black.png" alt="" />
           }
         </button>
-      </div>
+      </div> */}
     </div>
 
   );
