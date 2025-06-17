@@ -194,7 +194,7 @@ const Chatbot = () => {
               {showHeader && (
                 <div className='section-1'>
                   <div style={{ alignSelf: "center" }}>
-                    <img src="./Black.png" alt="" />
+                    <img src="./sarah.jpeg" alt="Sarah" style={{width:"45px",height:"45px",borderRadius:"50%"}}/>
                   </div>
                   <div>
                     <h3 style={{ fontSize: "24px", margin: 0 }}>Sarah</h3>
@@ -246,7 +246,7 @@ const Chatbot = () => {
                       </div>
                       <div className="message-container">
                         <div className="avatar">
-                          <img src="./logo.png" alt="bot" />
+                          <img src="./sarah.jpeg" alt="bot" style={{width:"40px",height:"40px",borderRadius:"50%"}}/>
                         </div>
                         <div className="message-time-avatar">{msg.time}</div>
                       </div>
