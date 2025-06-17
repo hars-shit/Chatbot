@@ -128,7 +128,7 @@ const Chatbot = () => {
     const payload = contactId ? { ...basePayload, contact_id: contactId } : basePayload
 
     try {
-      const res = await fetch('https://go.thomascmagee.com/api/inbound/?bot=asst_zkMH7Fjxv166GWoqlYj20C1t', {
+      const res = await fetch('https://app.chippewavalleycremation.com/api/inbound/?bot=asst_zkMH7Fjxv166GWoqlYj20C1t', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
