@@ -40,8 +40,8 @@ const Chatbot = () => {
   ]);
 
   const [input, setInput] = useState('');
-  const [showHeader, setShowHeader] = useState(true);
-  // const [botVisible, setBotVisible] = useState(true);
+  // const [showHeader, setShowHeader] = useState(true);
+  const [botVisible, setBotVisible] = useState(true);
   // const [contactId,setContactId]=useState(()=>{
   //   return localStorage.getItem('mortem_contact_id') || null ;
   // })
@@ -180,18 +180,29 @@ const Chatbot = () => {
     }
   };
 
+  const formatBotText=(text)=>{
+    if(!text) return "Server Not Responding";
+   
+    const linkedText= text.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (match, text, url) => {
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+    });
+
+    return linkedText.replace(/\n/g, '<br>');
+  }
+
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') sendMessage();
   };
 
   return (
+    botVisible &&
     <div className='main-container'>
       <div className='chatbot-main-container'>
       
           <div className="chatbot-wrapper">
             <div className="chatbot-header">
-              {showHeader && (
+             
                 <div className='section-1'>
                   <div style={{ alignSelf: "center" }}>
                     <img src="./sarah.jpeg" alt="Sarah" style={{width:"45px",height:"45px",borderRadius:"50%"}}/>
@@ -201,37 +212,30 @@ const Chatbot = () => {
                     <span className="chatbot-status">● Online</span>
                   </div>
                 </div>
-              )}
+             
 
-              <div className='section-1' style={!showHeader ? { width: "100%" } : {}} >
+              <div className='section-1'  >
 
-                {
-                  !showHeader ? (
-                    <div className="circle-toggle" style={!showHeader ? { marginLeft: "auto" } : {}}>
-                      <MdAdd fontSize="16px" color='white' onClick={() => setShowHeader(pre => !pre)} />
-                    </div>
-                  ) : (
-                    <div className="circle-toggle" onClick={() => setShowHeader(pre => !pre)}>
+              
+                    <div className="circle-toggle" onClick={() => setBotVisible(pre => !pre)}>
                       <FaMinus fontSize="10px" />
-
                     </div>
-                  )
-                }
+                
               </div>
             </div>
 
             <div className="chatbot-body" ref={bodyRef}>
-              {messages.map((msg, id) => (
+              {messages?.map((msg, id) => (
                 <div className={`${msg.type}`} key={id}>
-                  {msg.type === 'bot' ? (
+                  {msg?.type === 'bot' ? (
                     <>
                       <div className={`talk-bubble tri-right round btm-left`}>
-                        <div className="talktext">{msg.loading ? <Loader /> : msg.text}</div>
+                        <div className="talktext">{msg?.loading ? <Loader /> : <span dangerouslySetInnerHTML={{__html:formatBotText(msg?.text)}}/>}</div>
 
                         {
-                          msg.options && !msg.loading && (
+                          msg?.options && !msg?.loading && (
                             <div className='talk-options'>
-                              {msg.options.map((opt, idx) => (
+                              {msg?.options.map((opt, idx) => (
                                 <button key={idx}
                                   onClick={() => sendMessage(opt)}
                                 >
@@ -304,6 +308,7 @@ const Chatbot = () => {
         </button>
       </div> */}
     </div>
+  
 
   );
 };
