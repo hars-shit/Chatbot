@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 
 import { FaMinus } from 'react-icons/fa';
-import { MdAdd, MdDone, MdKeyboardArrowUp, MdOutlineKeyboardArrowDown } from 'react-icons/md';
+import { MdDone } from 'react-icons/md';
 import Loader from './Loader';
 
 
@@ -11,7 +11,7 @@ const getTime = () =>
 
 const Chatbot = () => {
   const bodyRef = useRef(null);
- 
+
   const scrollToBottom = () => {
     if (bodyRef.current) {
       bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
@@ -22,18 +22,18 @@ const Chatbot = () => {
     {
       id: Date.now(),
       type: 'bot',
-      text: "Hi, I'm Sarah,\nHow can I help today ?",
+      text: "Hi, I’m Sarah, the Chippewa Valley assistant. I can help with immediate needs, planning ahead, finding obituaries, or answering general questions.",
       time: getTime(),
     },
     {
       id: Date.now(),
       type: 'bot',
-      text: "Are you looking Forward for -:",
+      text: "",
       options: [
-        "A Death has Occurred",
-        "I am Planning Ahead",
-        "Find an Obituary",
-        "I have a general enquiry"
+        "A loved one just passed",
+        "I’m planning for the future",
+        "Find an obituary",
+        "I have a general question"
       ],
       time: getTime(),
     }
@@ -59,9 +59,20 @@ const Chatbot = () => {
   //   }
   // };
 
-  const get_unique_key=()=>{
-   return Math.random().toString(36).substring(2,8)
+  const get_unique_key = () => {
+    return Math.random().toString(36).substring(2, 8)
   }
+  useEffect(() => {
+    const handleMessage = (event) => {
+      if (event.data?.openChatbot) {
+        setBotVisible(true);
+      }
+    };
+  
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, []);
+  
 
   useEffect(() => {
     scrollToBottom();
@@ -86,7 +97,7 @@ const Chatbot = () => {
     setInput('');
 
     // const ip = await getIPAddress();
-    const unique_key=get_unique_key()
+    const unique_key = get_unique_key()
     const basePayload = {
       // payload data
       tags: "ai response,immediate need - entry",
@@ -180,10 +191,15 @@ const Chatbot = () => {
     }
   };
 
-  const formatBotText=(text)=>{
-    if(!text) return "Server Not Responding";
-   
-    const linkedText= text.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (match, text, url) => {
+  const handleClose = () => {
+    setBotVisible(pre => !pre);
+    window.parent.postMessage({ chatbotClosed: true }, "*")
+  }
+
+  const formatBotText = (text) => {
+    if (!text) return "";
+
+    const linkedText = text.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (match, text, url) => {
       return `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
     });
 
@@ -199,101 +215,101 @@ const Chatbot = () => {
     botVisible &&
     <div className='main-container'>
       <div className='chatbot-main-container'>
-      
-          <div className="chatbot-wrapper">
-            <div className="chatbot-header">
-             
-                <div className='section-1'>
-                  <div style={{ alignSelf: "center" }}>
-                    <img src="./sarah.jpeg" alt="Sarah" style={{width:"45px",height:"45px",borderRadius:"50%"}}/>
-                  </div>
-                  <div>
-                    <h3 style={{ fontSize: "24px", margin: 0 }}>Sarah</h3>
-                    <span className="chatbot-status">● Online</span>
-                  </div>
-                </div>
-             
 
-              <div className='section-1'  >
+        <div className="chatbot-wrapper">
+          <div className="chatbot-header">
 
-              
-                    <div className="circle-toggle" onClick={() => setBotVisible(pre => !pre)}>
-                      <FaMinus fontSize="10px" />
-                    </div>
-                
+            <div className='section-1'>
+              <div style={{ alignSelf: "center" }}>
+                <img src="./sarah.jpeg" alt="Sarah" style={{ width: "45px", height: "45px", borderRadius: "50%" }} />
+              </div>
+              <div>
+                <h3 style={{ fontSize: "24px", margin: 0 }}>Sarah</h3>
+                <span className="chatbot-status">● Online</span>
               </div>
             </div>
 
-            <div className="chatbot-body" ref={bodyRef}>
-              {messages?.map((msg, id) => (
-                <div className={`${msg.type}`} key={id}>
-                  {msg?.type === 'bot' ? (
-                    <>
-                      <div className={`talk-bubble tri-right round btm-left`}>
-                        <div className="talktext">{msg?.loading ? <Loader /> : <span dangerouslySetInnerHTML={{__html:formatBotText(msg?.text)}}/>}</div>
 
-                        {
-                          msg?.options && !msg?.loading && (
-                            <div className='talk-options'>
-                              {msg?.options.map((opt, idx) => (
-                                <button key={idx}
-                                  onClick={() => sendMessage(opt)}
-                                >
-                                  {idx + 1}. &nbsp;{opt}
-                                </button>
-                              ))}
-                            </div>
-                          )
-                        }
+            <div className='section-1'  >
 
 
-                      </div>
-                      <div className="message-container">
-                        <div className="avatar">
-                          <img src="./sarah.jpeg" alt="bot" style={{width:"40px",height:"40px",borderRadius:"50%"}}/>
-                        </div>
-                        <div className="message-time-avatar">{msg.time}</div>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="talk-bubble-user tri-right btm-right">
-                        <div className="talktext talk-user" style={{ color: "rgba(68, 68, 68, 1)" }}>
-                          {msg.text}
-                        </div>
-                      </div>
-                      <div className="message-container-user">
-                        <div className="message-time-user">
-                          {msg.time}&nbsp;<MdDone />
-
-                        </div>
-
-                        <div>
-                          <img src="./user.png" alt="user" />
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-              ))}
-              {/* <div ref={messageRef} /> */}
-            </div>
-
-            <div className="chatbot-input">
-              <div className='inside-bot'>
-                <input
-                  style={{ fontSize: "18px" }}
-                  type="text"
-                  placeholder="Type your message here..."
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                />
-                <button className="send-button" onClick={()=>sendMessage()}>➤</button>
+              <div className="circle-toggle" onClick={() => handleClose()}>
+                <FaMinus fontSize="10px" />
               </div>
+
             </div>
           </div>
-        
+
+          <div className="chatbot-body" ref={bodyRef}>
+            {messages?.map((msg, id) => (
+              <div className={`${msg.type}`} key={id}>
+                {msg?.type === 'bot' ? (
+                  <>
+                    <div className={`talk-bubble tri-right round btm-left`}>
+                      <div className="talktext">{msg?.loading ? <Loader /> : <span dangerouslySetInnerHTML={{ __html: formatBotText(msg?.text) }} />}</div>
+
+                      {
+                        msg?.options && !msg?.loading && (
+                          <div className='talk-options'>
+                            {msg?.options.map((opt, idx) => (
+                              <button key={idx}
+                                onClick={() => sendMessage(opt)}
+                              >
+                                {idx + 1}. &nbsp;{opt}
+                              </button>
+                            ))}
+                          </div>
+                        )
+                      }
+
+
+                    </div>
+                    <div className="message-container">
+                      <div className="avatar">
+                        <img src="./sarah.jpeg" alt="bot" style={{ width: "40px", height: "40px", borderRadius: "50%" }} />
+                      </div>
+                      <div className="message-time-avatar">{msg.time}</div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="talk-bubble-user tri-right btm-right">
+                      <div className="talktext talk-user" style={{ color: "rgba(68, 68, 68, 1)" }}>
+                        {msg.text}
+                      </div>
+                    </div>
+                    <div className="message-container-user">
+                      <div className="message-time-user">
+                        {msg.time}&nbsp;<MdDone />
+
+                      </div>
+
+                      <div>
+                        <img src="./user.png" alt="user" />
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
+            {/* <div ref={messageRef} /> */}
+          </div>
+
+          <div className="chatbot-input">
+            <div className='inside-bot'>
+              <input
+                style={{ fontSize: "18px" }}
+                type="text"
+                placeholder="Type your message here..."
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+              />
+              <button className="send-button" onClick={() => sendMessage()}>➤</button>
+            </div>
+          </div>
+        </div>
+
 
 
       </div>
@@ -308,7 +324,7 @@ const Chatbot = () => {
         </button>
       </div> */}
     </div>
-  
+
 
   );
 };
