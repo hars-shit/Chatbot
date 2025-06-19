@@ -40,6 +40,7 @@ const Chatbot = () => {
   ]);
 
   const [input, setInput] = useState('');
+  const [expend,setExpend]=useState(false);
   // const [showHeader, setShowHeader] = useState(true);
   const [botVisible, setBotVisible] = useState(true);
   // const [contactId,setContactId]=useState(()=>{
@@ -215,11 +216,14 @@ const Chatbot = () => {
   return (
     botVisible &&
     <div className='main-container'>
-      <div className='chatbot-main-container'>
+      <div className='chatbot-main-container' style={expend ? {width:"100%"} : {}}>
 
         <div className="chatbot-wrapper">
           <div className="chatbot-header">
-
+          <div className='chatbot-header-1' onClick={()=>setExpend(pre=>!pre)}>
+            open
+          </div>
+          <div className='chatbot-header-2'>
             <div className='section-1'>
               <div style={{ alignSelf: "center" }}>
                 <img src="./sarah.jpeg" alt="Sarah" style={{ width: "45px", height: "45px", borderRadius: "50%" }} />
@@ -238,6 +242,7 @@ const Chatbot = () => {
                 <FaMinus fontSize="10px" />
               </div>
 
+            </div>
             </div>
           </div>
 
