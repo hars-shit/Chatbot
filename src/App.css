@@ -128,8 +128,7 @@ html {
   border-radius: 12px;
   display: inline-block;
   position: relative;
-  width: 100%;
-  max-width: 300px;
+ 
   height: auto;
   background: rgba(104, 168, 235, 1);
 
@@ -167,8 +166,6 @@ html {
   border-bottom-left-radius: 12px;
   display: inline-block;
   position: relative;
-  width: 100%;
-  max-width: 300px;
   height: auto;
   background: var(--secondary-bg-color);
 

@@ -4,6 +4,7 @@ import './App.css';
 import { FaMinus } from 'react-icons/fa';
 import { MdDone } from 'react-icons/md';
 import Loader from './Loader';
+import { CgExpand } from 'react-icons/cg';
 
 
 const getTime = () =>
@@ -79,6 +80,7 @@ const Chatbot = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
   useEffect(() => {
     console.log("hii")
       window.parent.postMessage({ expend }, "*");
@@ -221,12 +223,12 @@ const Chatbot = () => {
   return (
     botVisible &&
     <div className='main-container'>
-      <div className='chatbot-main-container' style={expend ? {width:"100%"} : {}}>
+      <div className='chatbot-main-container' style={expend ? {width:"100%",height:"100%"} : {}}>
 
         <div className="chatbot-wrapper">
           <div className="chatbot-header">
           <div className='chatbot-header-1' onClick={()=>setExpend(pre=>!pre)}>
-            open
+          <CgExpand style={{color:"white",fontSize:"22px"}} />
           </div>
           <div className='chatbot-header-2'>
             <div className='section-1'>
@@ -256,7 +258,7 @@ const Chatbot = () => {
               <div className={`${msg.type}`} key={id}>
                 {msg?.type === 'bot' ? (
                   <>
-                    <div className={`talk-bubble tri-right round btm-left`}>
+                    <div className={`talk-bubble tri-right round btm-left`} style={expend ? {width:"65%"} : { width: "100%",maxWidth: "300px"}}>
                       <div className="talktext">{msg?.loading ? <Loader /> : <span dangerouslySetInnerHTML={{ __html: formatBotText(msg?.text) }} />}</div>
 
                       {
@@ -284,7 +286,7 @@ const Chatbot = () => {
                   </>
                 ) : (
                   <>
-                    <div className="talk-bubble-user tri-right btm-right">
+                    <div className="talk-bubble-user tri-right btm-right" style={expend ? {width:"65%"} : { width: "100%",maxWidth: "300px"}}>
                       <div className="talktext talk-user" style={{ color: "rgba(68, 68, 68, 1)" }}>
                         {msg.text}
                       </div>
