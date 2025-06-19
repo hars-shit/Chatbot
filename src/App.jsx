@@ -258,7 +258,7 @@ const Chatbot = () => {
               <div className={`${msg.type}`} key={id}>
                 {msg?.type === 'bot' ? (
                   <>
-                    <div className={`talk-bubble tri-right round btm-left`} style={expend ? {width:"65%"} : { width: "100%",maxWidth: "300px"}}>
+                    <div className={`talk-bubble tri-right round btm-left`} style={expend ? {width:"75%"} : { width: "100%",maxWidth: "300px"}}>
                       <div className="talktext">{msg?.loading ? <Loader /> : <span dangerouslySetInnerHTML={{ __html: formatBotText(msg?.text) }} />}</div>
 
                       {
@@ -286,7 +286,7 @@ const Chatbot = () => {
                   </>
                 ) : (
                   <>
-                    <div className="talk-bubble-user tri-right btm-right" style={expend ? {width:"65%"} : { width: "100%",maxWidth: "300px"}}>
+                    <div className="talk-bubble-user tri-right btm-right" style={expend ? {width:"75%"} : { width: "100%",maxWidth: "300px"}}>
                       <div className="talktext talk-user" style={{ color: "rgba(68, 68, 68, 1)" }}>
                         {msg.text}
                       </div>
