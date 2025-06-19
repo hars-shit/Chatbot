@@ -80,6 +80,7 @@ const Chatbot = () => {
     scrollToBottom();
   }, [messages]);
   useEffect(() => {
+    console.log("hii")
       window.parent.postMessage({ expend }, "*");
     
   }, [expend]);
