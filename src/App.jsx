@@ -58,6 +58,7 @@ const Chatbot = () => {
   //     return "unknown_ip";
   //   }
   // };
+  
 
   const get_unique_key = () => {
     return Math.random().toString(36).substring(2, 8)
@@ -225,7 +226,7 @@ const Chatbot = () => {
               </div>
               <div>
                 <h3 style={{ fontSize: "24px", margin: 0 }}>Sarah</h3>
-                <span className="chatbot-status">● Online</span>
+                <span className="chatbot-status">● AI Assistant</span>
               </div>
             </div>
 
