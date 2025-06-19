@@ -79,6 +79,10 @@ const Chatbot = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+  useEffect(() => {
+      window.parent.postMessage({ expend }, "*");
+    
+  }, [expend]);
 
   const sendMessage = async (buttonText) => {
     const userMessage = (buttonText ?? input).trim();
