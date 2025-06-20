@@ -1,6 +1,6 @@
 const  Loader = () => (
     <div className="typing">
-      <div>Sarah is tying</div>
+      <div>Sarah is typing</div>
       <div>
       <span /><span /><span />
       </div>
