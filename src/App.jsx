@@ -233,7 +233,7 @@ const Chatbot = () => {
           <div className='chatbot-header-2'>
             <div className='section-1'>
               <div style={{ alignSelf: "center" }}>
-                <img src="./sarah.jpeg" alt="Sarah" style={{ width: "45px", height: "45px", borderRadius: "50%" }} />
+                <img src="./sarah.png" alt="Sarah" style={{ objectFit:"cover",objectPosition:"50% 15%",width: "40px", height: "40px", borderRadius: "50%" }} />
               </div>
               <div>
                 <h3 style={{ fontSize: "24px", margin: 0 }}>Sarah</h3>
@@ -279,7 +279,7 @@ const Chatbot = () => {
                     </div>
                     <div className="message-container">
                       <div className="avatar">
-                        <img src="./sarah.jpeg" alt="bot" style={{ width: "40px", height: "40px", borderRadius: "50%" }} />
+                        <img src="./sarah.png" alt="bot" style={{ objectFit:"cover",objectPosition:"50% 15%", width: "40px", height: "40px", borderRadius: "50%" }} />
                       </div>
                       <div className="message-time-avatar">{msg.time}</div>
                     </div>
