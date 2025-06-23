@@ -1,0 +1,121 @@
+html {
+    overflow-x: hidden;
+  }
+  
+  #chat-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    flex-direction: column;
+  }
+  
+  #chat-toggle img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+  
+  #chat-toggle:hover {
+    animation: gently-enlarge 0.6s ease-in-out forwards;
+  }
+  
+  @keyframes gently-enlarge {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    50% {
+      transform: scale(1.15);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+    }
+    100% {
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.22);
+    }
+  }
+  
+  .tooltip {
+    position: absolute;
+    bottom: 55px;
+    left: 10%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #4b6cb7, #182848);
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    max-width: 180px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 10000;
+    backdrop-filter: blur(3px);
+  }
+  
+  #chat-toggle.tooltip-hidden .tooltip {
+    display: none;
+  }
+  
+  #chat-toggle:hover .tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-8px);
+  }
+  
+  .tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: #182848 transparent transparent transparent;
+  }
+  
+  #chat-widget {
+    position: fixed;
+    bottom: 45px;
+    right: 20px;
+    height: 800px;
+    max-width: 95vw;
+    max-height: 90vh;
+    z-index: 9998;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: all 0.4s ease;
+  }
+  
+  #chat-widget.chat-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  
+  @media (max-width: 480px) {
+    #chat-widget {
+      width: 95vw !important;
+      height: 85vh !important;
+      bottom: 35px !important;
+      right: 10px !important;
+    }
+  }
+  
