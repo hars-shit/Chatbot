@@ -95,7 +95,7 @@ html {
     right: 20px;
     height: 800px;
     max-width: 95vw;
-    max-height: 90vh;
+    max-height: 100vh;
     z-index: 9998;
     overflow: hidden;
     opacity: 0;
