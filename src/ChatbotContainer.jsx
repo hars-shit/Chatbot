@@ -7,49 +7,51 @@ const ChatbotContainer = () => {
   const [expend, setExpend] = useState(false);
   const containerRef = useRef(null);
 
-  // One-time auto popup after 9 sec
+  // 🔁 One-time auto popup logic
   useEffect(() => {
     const isDesktopSizedIframe = () => {
       const width = containerRef.current?.offsetWidth || 0;
       return width >= 400;
     };
 
+    // Run only once if not shown yet
     const hasPopupShown = sessionStorage.getItem('chatbotAutoPopupShown');
 
     if (isDesktopSizedIframe() && !hasPopupShown) {
       const timer = setTimeout(() => {
-        setChatVisible(true); // This will trigger the postMessage below
+        setChatVisible(true);
         sessionStorage.setItem('chatbotAutoPopupShown', 'true');
-      }, 9000);
+      }, 9000); // ⏱ 9 seconds
 
-      return () => clearTimeout(timer);
+      return () => clearTimeout(timer); // cleanup
     }
   }, []);
 
-  // Send message to parent for resizing
+  // 📤 Send chatbotVisible state to parent
   useEffect(() => {
-    // Ensure this runs even on initial render
     window.parent.postMessage({ chatbotVisible: chatVisible }, '*');
   }, [chatVisible]);
 
-  const handleToggleClick = () => setChatVisible(prev => !prev);
+  // 👇 Toggle on click
+  const handleToggleClick = () => setChatVisible((prev) => !prev);
 
   return (
     <div ref={containerRef}>
-      {/* Always render the widget container so useEffect can run */}
-      <div
-        id="chat-widget"
-        style={{ display: chatVisible ? 'block' : 'none', width: expend ? '100vw' : '' }}
-      >
-        <Chatbot
-          setExpend={setExpend}
-          expend={expend}
-          botVisible={chatVisible}
-          setBotVisible={setChatVisible}
-        />
-      </div>
+      {chatVisible && (
+        <div
+          id="chat-widget"
+          className="chat-visible"
+          style={{ width: expend ? '100vw' : '' }}
+        >
+          <Chatbot
+            setExpend={setExpend}
+            expend={expend}
+            botVisible={chatVisible}
+            setBotVisible={setChatVisible}
+          />
+        </div>
+      )}
 
-      {/* Toggle Button */}
       <div
         id="chat-toggle"
         className={chatVisible ? 'tooltip-hidden' : ''}
