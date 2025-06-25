@@ -180,7 +180,6 @@ const Chatbot = () => {
 
   const handleClose = () => {
     setBotVisible(pre => !pre);
-    window.parent.postMessage({ chatbotClosed: true }, "*")
   }
 
   const formatBotText = (text) => {
