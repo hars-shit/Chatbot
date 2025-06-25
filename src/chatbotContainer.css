@@ -4,7 +4,7 @@ html {
   
   #chat-toggle {
     position: fixed;
-    bottom: 20px;
+    bottom: 5px;
     right: 20px;
     width: 45px;
     height: 45px;
@@ -112,7 +112,7 @@ html {
   
   @media (max-width: 480px) {
     #chat-widget {
-      bottom: 20px;
+      bottom: 0px;
       width: 100vw !important;
       height: 100vh !important;
      
