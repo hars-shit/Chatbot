@@ -42,7 +42,7 @@ const ChatbotContainer = () => {
         <div
           id="chat-widget"
           className="chat-visible"
-          style={{ width: expend ? '100vw' : '400px' }}
+          style={{ width: expend ? '100vw' : '' }}
         >
           <Chatbot setExpend={setExpend} setBotVisible={setChatVisible} />
         </div>
