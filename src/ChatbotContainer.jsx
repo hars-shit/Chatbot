@@ -44,7 +44,10 @@ const ChatbotContainer = () => {
           className="chat-visible"
           style={{ width: expend ? '100vw' : '' }}
         >
-          <Chatbot setExpend={setExpend} setBotVisible={setChatVisible} />
+          <Chatbot setExpend={setExpend} 
+           expend={expend}
+           botVisible={chatVisible}
+          setBotVisible={setChatVisible} />
         </div>
       )}
 

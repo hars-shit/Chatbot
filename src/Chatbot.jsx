@@ -10,7 +10,7 @@ import { CgExpand } from 'react-icons/cg';
 const getTime = () =>
   new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-const Chatbot = () => {
+const Chatbot = ({ expend, setExpend, botVisible, setBotVisible}) => {
   const bodyRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -41,9 +41,8 @@ const Chatbot = () => {
   ]);
 
   const [input, setInput] = useState('');
-  const [expend,setExpend]=useState(false);
-  
-  const [botVisible, setBotVisible] = useState(true);
+
+ 
 
   const [contactId, setContactId] = useState(null);
 
@@ -179,7 +178,8 @@ const Chatbot = () => {
   };
 
   const handleClose = () => {
-    setBotVisible(pre => !pre);
+   
+    window.parent.postMessage({ chatbotClosed: true }, "*");
   }
 
   const formatBotText = (text) => {
