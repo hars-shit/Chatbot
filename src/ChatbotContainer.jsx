@@ -12,18 +12,19 @@ const ChatbotContainer = () => {
       const width = containerRef.current?.offsetWidth || 0;
       return width >= 400;
     };
-
-    const hasPopupShown = localStorage.getItem('chatbotAutoPopupShown');
-
+  
+    const hasPopupShown = sessionStorage.getItem('chatbotAutoPopupShown');
+  
     if (isDesktopSizedIframe() && !hasPopupShown) {
       const timer = setTimeout(() => {
         setChatVisible(true);
-        localStorage.setItem('chatbotAutoPopupShown', 'true');
+        sessionStorage.setItem('chatbotAutoPopupShown', 'true');
       }, 9000);
-
+  
       return () => clearTimeout(timer);
     }
   }, []);
+  
   useEffect(() => {
     window.parent.postMessage({ chatbotVisible: chatVisible }, '*');
   }, [chatVisible]);
