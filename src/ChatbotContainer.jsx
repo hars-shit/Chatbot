@@ -7,7 +7,7 @@ const ChatbotContainer = () => {
   const [expend, setExpend] = useState(false);
   const containerRef = useRef(null);
 
-  // 🔁 One-time auto popup logic
+  // One-time auto popup after 9 sec
   useEffect(() => {
     const isDesktopSizedIframe = () => {
       const width = containerRef.current?.offsetWidth || 0;
@@ -18,7 +18,7 @@ const ChatbotContainer = () => {
 
     if (isDesktopSizedIframe() && !hasPopupShown) {
       const timer = setTimeout(() => {
-        setChatVisible(true);
+        setChatVisible(true); // This will trigger the postMessage below
         sessionStorage.setItem('chatbotAutoPopupShown', 'true');
       }, 9000);
 
@@ -26,22 +26,20 @@ const ChatbotContainer = () => {
     }
   }, []);
 
-  // 📤 Always send chatbotVisible status to parent
+  // Send message to parent for resizing
   useEffect(() => {
+    // Ensure this runs even on initial render
     window.parent.postMessage({ chatbotVisible: chatVisible }, '*');
   }, [chatVisible]);
 
-  const handleToggleClick = () => {
-    setChatVisible((prev) => !prev);
-  };
+  const handleToggleClick = () => setChatVisible(prev => !prev);
 
   return (
     <div ref={containerRef}>
-      {/* 🧠 Always render Chatbot container so it can send postMessage */}
+      {/* Always render the widget container so useEffect can run */}
       <div
         id="chat-widget"
-        className={`chat-container ${chatVisible ? 'visible' : 'hidden'}`}
-        style={{ width: expend ? '100vw' : '' }}
+        style={{ display: chatVisible ? 'block' : 'none', width: expend ? '100vw' : '' }}
       >
         <Chatbot
           setExpend={setExpend}
@@ -51,6 +49,7 @@ const ChatbotContainer = () => {
         />
       </div>
 
+      {/* Toggle Button */}
       <div
         id="chat-toggle"
         className={chatVisible ? 'tooltip-hidden' : ''}
