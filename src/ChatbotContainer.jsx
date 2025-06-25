@@ -1,38 +1,27 @@
 // ChatbotContainer.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Chatbot from './Chatbot';
 import './chatbotContainer.css';
 
 const ChatbotContainer = () => {
   const [chatVisible, setChatVisible] = useState(false);
   const [expend, setExpend] = useState(false);
-  const [shouldAutoPopup, setShouldAutoPopup] = useState(false);
+  const containerRef = useRef(null);
 
-  // Detect real screen size using matchMedia
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(min-width: 481px)');
-
-    const checkIsDesktop = () => {
-      setShouldAutoPopup(mediaQuery.matches);
+    const isDesktopSizedIframe = () => {
+      // Measure iframe container size directly
+      const width = containerRef.current?.offsetWidth || 0;
+      return width >= 400; // Adjust this threshold as needed
     };
 
-    checkIsDesktop(); // initial run
-    mediaQuery.addEventListener('change', checkIsDesktop);
-
-    return () => {
-      mediaQuery.removeEventListener('change', checkIsDesktop);
-    };
-  }, []);
-
-  // 9-second popup only if desktop
-  useEffect(() => {
-    if (shouldAutoPopup) {
+    if (isDesktopSizedIframe()) {
       const timer = setTimeout(() => setChatVisible(true), 9000);
       return () => clearTimeout(timer);
     }
-  }, [shouldAutoPopup]);
+  }, []);
 
-  // Listen for postMessage events
+  // Message handling
   useEffect(() => {
     const handleMessage = (event) => {
       const { chatbotClosed, expend, triggerPopup } = event.data || {};
@@ -41,14 +30,14 @@ const ChatbotContainer = () => {
       if (triggerPopup) setChatVisible(true);
     };
 
-    window.addEventListener("message", handleMessage);
-    return () => window.removeEventListener("message", handleMessage);
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
   }, []);
 
   const handleToggleClick = () => setChatVisible((prev) => !prev);
 
   return (
-    <>
+    <div ref={containerRef}>
       {chatVisible && (
         <div
           id="chat-widget"
@@ -70,7 +59,7 @@ const ChatbotContainer = () => {
           alt="logo-chatbot"
         />
       </div>
-    </>
+    </div>
   );
 };
 
