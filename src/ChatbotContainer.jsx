@@ -14,43 +14,42 @@ const ChatbotContainer = () => {
       return width >= 400;
     };
 
-    // Run only once if not shown yet
     const hasPopupShown = sessionStorage.getItem('chatbotAutoPopupShown');
 
     if (isDesktopSizedIframe() && !hasPopupShown) {
       const timer = setTimeout(() => {
         setChatVisible(true);
         sessionStorage.setItem('chatbotAutoPopupShown', 'true');
-      }, 9000); // ⏱ 9 seconds
+      }, 9000);
 
-      return () => clearTimeout(timer); // cleanup
+      return () => clearTimeout(timer);
     }
   }, []);
 
- 
+  // 📤 Always send chatbotVisible status to parent
   useEffect(() => {
     window.parent.postMessage({ chatbotVisible: chatVisible }, '*');
   }, [chatVisible]);
 
- 
-  const handleToggleClick = () => setChatVisible((prev) => !prev);
+  const handleToggleClick = () => {
+    setChatVisible((prev) => !prev);
+  };
 
   return (
     <div ref={containerRef}>
-      {chatVisible && (
-        <div
-          id="chat-widget"
-          className="chat-visible"
-          style={{ width: expend ? '100vw' : '' }}
-        >
-          <Chatbot
-            setExpend={setExpend}
-            expend={expend}
-            botVisible={chatVisible}
-            setBotVisible={setChatVisible}
-          />
-        </div>
-      )}
+      {/* 🧠 Always render Chatbot container so it can send postMessage */}
+      <div
+        id="chat-widget"
+        className={`chat-container ${chatVisible ? 'visible' : 'hidden'}`}
+        style={{ width: expend ? '100vw' : '' }}
+      >
+        <Chatbot
+          setExpend={setExpend}
+          expend={expend}
+          botVisible={chatVisible}
+          setBotVisible={setChatVisible}
+        />
+      </div>
 
       <div
         id="chat-toggle"
