@@ -7,48 +7,32 @@ const ChatbotContainer = () => {
   const [expend, setExpend] = useState(false);
   const containerRef = useRef(null);
 
+  // 🔁 One-time auto popup logic
   useEffect(() => {
     const isDesktopSizedIframe = () => {
       const width = containerRef.current?.offsetWidth || 0;
       return width >= 400;
     };
-  
+
+    // Run only once if not shown yet
     const hasPopupShown = sessionStorage.getItem('chatbotAutoPopupShown');
-  
+
     if (isDesktopSizedIframe() && !hasPopupShown) {
       const timer = setTimeout(() => {
         setChatVisible(true);
         sessionStorage.setItem('chatbotAutoPopupShown', 'true');
-      }, 9000);
-  
-      return () => clearTimeout(timer);
+      }, 9000); // ⏱ 9 seconds
+
+      return () => clearTimeout(timer); // cleanup
     }
   }, []);
-  
+
+ 
   useEffect(() => {
     window.parent.postMessage({ chatbotVisible: chatVisible }, '*');
   }, [chatVisible]);
-  
 
-  useEffect(() => {
-    const isDesktopSizedIframe = () => {
-      const width = containerRef.current?.offsetWidth || 0;
-      return width >= 400;
-    };
-  
-    const hasPopupShown = sessionStorage.getItem('chatbotAutoPopupShown');
-  
-    if (isDesktopSizedIframe() && !hasPopupShown) {
-      const timer = setTimeout(() => {
-        setChatVisible(true);
-        sessionStorage.setItem('chatbotAutoPopupShown', 'true');
-      }, 9000);
-  
-      return () => clearTimeout(timer);
-    }
-  }, []);
-  
-
+ 
   const handleToggleClick = () => setChatVisible((prev) => !prev);
 
   return (
