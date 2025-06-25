@@ -52,23 +52,6 @@ const Chatbot = () => {
   const get_unique_key = () => {
     return Math.random().toString(36).substring(2, 8)
   }
-  const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight
-  });
-  
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
-    };
-  
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-  
   useEffect(() => {
     const handleMessage = (event) => {
       if (event.data?.openChatbot) {
@@ -227,14 +210,7 @@ const Chatbot = () => {
   return (
     botVisible &&
     <div className='main-container'>
-      <div className='chatbot-main-container' style={expend ? {
-          width: `${windowSize.width}px`,
-          height: `${windowSize.height}px`,
-          position: "fixed",
-          top: 0,
-          left: 0,
-          zIndex: 9999
-        } : {}}>
+      <div className='chatbot-main-container' style={expend ? {width:"100%",height:"100%"} : {}}>
 
         <div className="chatbot-wrapper">
           <div className="chatbot-header">
