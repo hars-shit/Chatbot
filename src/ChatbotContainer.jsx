@@ -1,68 +1,45 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Chatbot from './Chatbot';
 import './chatbotContainer.css';
 
 const ChatbotContainer = () => {
   const [chatVisible, setChatVisible] = useState(false);
-  const [expend, setExpend] = useState(false);
   const containerRef = useRef(null);
 
+  // Auto popup on first visit per session
   useEffect(() => {
     const isDesktopSizedIframe = () => {
       const width = containerRef.current?.offsetWidth || 0;
       return width >= 400;
     };
 
-    const hasPopupShown = localStorage.getItem('chatbotAutoPopupShown');
-
-    if (isDesktopSizedIframe() && !hasPopupShown) {
-      const timer = setTimeout(() => {
-        setChatVisible(true);
-        localStorage.setItem('chatbotAutoPopupShown', 'true');
-      }, 9000);
-
-      return () => clearTimeout(timer);
-    }
-  }, []);
-
-  useEffect(() => {
-    const isDesktopSizedIframe = () => {
-      const width = containerRef.current?.offsetWidth || 0;
-      return width >= 400;
-    };
-  
     const hasPopupShown = sessionStorage.getItem('chatbotAutoPopupShown');
-  
+
     if (isDesktopSizedIframe() && !hasPopupShown) {
       const timer = setTimeout(() => {
         setChatVisible(true);
         sessionStorage.setItem('chatbotAutoPopupShown', 'true');
+
+        // Notify iframe to expand
+        const iframe = document.querySelector('#chat-widge iframe');
+        iframe?.contentWindow.postMessage({ chatbotVisible: true }, '*');
       }, 9000);
-  
+
       return () => clearTimeout(timer);
     }
   }, []);
-  
 
-  const handleToggleClick = () => setChatVisible((prev) => !prev);
+  // Toggle open/close
+  const handleToggleClick = () => {
+    const newVisibility = !chatVisible;
+    setChatVisible(newVisibility);
+
+    // Notify iframe to show/hide
+    const iframe = document.querySelector('#chat-widge iframe');
+    iframe?.contentWindow.postMessage({ chatbotVisible: newVisibility }, '*');
+  };
 
   return (
     <div ref={containerRef}>
-      {chatVisible && (
-        <div
-          id="chat-widget"
-          className="chat-visible"
-          style={{ width: expend ? '100vw' : '' }}
-        >
-          <Chatbot
-            setExpend={setExpend}
-            expend={expend}
-            botVisible={chatVisible}
-            setBotVisible={setChatVisible}
-          />
-        </div>
-      )}
-
       <div
         id="chat-toggle"
         className={chatVisible ? 'tooltip-hidden' : ''}
