@@ -194,22 +194,38 @@ const Chatbot = ({ expend, setExpend, botVisible, setBotVisible}) => {
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') sendMessage();
   };
+
+  
   const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight
+    width: 0,
+    height: 0,
   });
+
   
   useEffect(() => {
-    const handleResize = () => {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
+    const handleMessage = (event) => {
+      const { type, width, height } = event.data || {};
+      if (type === 'WINDOW_SIZE') {
+        setWindowSize({ width, height });
+      }
     };
   
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
   }, []);
+  
+  useEffect(() => {
+    const handleMessage = (event) => {
+      const { type, width, height } = event.data || {};
+      if (type === 'WINDOW_SIZE') {
+        setWindowSize({ width, height });
+      }
+    };
+  
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
+  
   
 
   return (
