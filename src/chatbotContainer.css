@@ -113,7 +113,7 @@ html {
   @media (max-width: 480px) {
     #chat-widget {
       width: 100vw !important;
-      height: 95vh !important;
+      height: 100vh !important;
      
     }
   }

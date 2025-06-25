@@ -15,7 +15,7 @@ const Chatbot = () => {
 
   const scrollToBottom = () => {
     if (bodyRef.current) {
-      bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
+      bodyRef.current.scrollTop = bodyRef.current.scrollHeight +60;
     }
   };
 
