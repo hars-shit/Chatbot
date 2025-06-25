@@ -151,10 +151,7 @@ const Chatbot = () => {
         botReply = data['reply'] || 'Sorry, something went wrong.';
         returnedId = data?.contact_id;
 
-        // if(! contactId &&  returnedId){
-        //   setContactId(returnedId)
-        //   localStorage.setItem('mortem_contact_id',returnedId)
-        // }
+       
         if (!contactId && returnedId) {
           setContactId(returnedId);
         }
@@ -163,10 +160,7 @@ const Chatbot = () => {
         botReply = text;
       }
 
-      // setMessages(prev => [
-      //   ...prev,
-      //   { id: Date.now(), type: 'bot', text: botReply, time: getTime() }
-      // ]);
+    
       setMessages(prev => prev.map(msg =>
         msg.id === loaderId
           ? { ...msg, loading: false, text: botReply }
@@ -175,10 +169,7 @@ const Chatbot = () => {
 
     } catch (err) {
       console.error('Error:', err);
-      // setMessages(prev => [
-      //   ...prev,
-      //   { id: Date.now(), type: 'bot', text: 'Failed to reach server.', time: getTime() }
-      // ]);
+    
       setMessages(prev => prev.map(msg =>
         msg.id === loaderId
           ? { ...msg, loading: false, text: 'Failed to reach server.' }
@@ -206,6 +197,23 @@ const Chatbot = () => {
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') sendMessage();
   };
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight
+  });
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+  
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  
 
   return (
     botVisible &&
@@ -214,9 +222,12 @@ const Chatbot = () => {
 
         <div className="chatbot-wrapper">
           <div className="chatbot-header">
-          <div className='chatbot-header-1' onClick={()=>setExpend(pre=>!pre)}>
-          <CgExpand style={{color:"white",fontSize:"22px"}} />
-          </div>
+          {windowSize.width > 768 && (
+  <div className='chatbot-header-1' onClick={() => setExpend(pre => !pre)}>
+    <CgExpand style={{ color: "white", fontSize: "22px" }} />
+  </div>
+)}
+
           <div className='chatbot-header-2'>
             <div className='section-1'>
               <div style={{ alignSelf: "center" }}>
