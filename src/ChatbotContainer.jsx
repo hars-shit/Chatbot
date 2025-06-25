@@ -4,9 +4,31 @@ import './chatbotContainer.css';
 const ChatbotContainer = () => {
   const [chatVisible, setChatVisible] = useState(false);
   const containerRef = useRef(null);
+  const iframeRef = useRef(null);
+  const [iframeLoaded, setIframeLoaded] = useState(false);
 
-  // Auto popup on first visit per session
+  // Send visibility message to iframe
+  const postVisibility = (visible) => {
+    if (iframeRef.current?.contentWindow) {
+      iframeRef.current.contentWindow.postMessage({ chatbotVisible: visible }, '*');
+    }
+  };
+
+  // Handle iframe load
   useEffect(() => {
+    const iframe = document.querySelector('#chat-widge iframe');
+    if (iframe) {
+      iframeRef.current = iframe;
+      iframe.addEventListener('load', () => {
+        setIframeLoaded(true);
+      });
+    }
+  }, []);
+
+  // Auto-popup on first visit in session
+  useEffect(() => {
+    if (!iframeLoaded) return;
+
     const isDesktopSizedIframe = () => {
       const width = containerRef.current?.offsetWidth || 0;
       return width >= 400;
@@ -18,24 +40,17 @@ const ChatbotContainer = () => {
       const timer = setTimeout(() => {
         setChatVisible(true);
         sessionStorage.setItem('chatbotAutoPopupShown', 'true');
-
-        // Notify iframe to expand
-        const iframe = document.querySelector('#chat-widge iframe');
-        iframe?.contentWindow.postMessage({ chatbotVisible: true }, '*');
+        postVisibility(true);
       }, 9000);
 
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [iframeLoaded]);
 
-  // Toggle open/close
   const handleToggleClick = () => {
     const newVisibility = !chatVisible;
     setChatVisible(newVisibility);
-
-    // Notify iframe to show/hide
-    const iframe = document.querySelector('#chat-widge iframe');
-    iframe?.contentWindow.postMessage({ chatbotVisible: newVisibility }, '*');
+    postVisibility(newVisibility);
   };
 
   return (
