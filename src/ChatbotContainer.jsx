@@ -20,7 +20,7 @@ const ChatbotContainer = () => {
     if (isDesktopSizedIframe() && !hasPopupShown) {
       const timer = setTimeout(() => {
         setChatVisible(true);
-        sessionStorage.setItem('chatbotAutoPopupShown', 'true');
+        sessionStorage.setItem('chatbotAutoPopupShown', true);
       }, 9000); // ⏱ 9 seconds
 
       return () => clearTimeout(timer); // cleanup
