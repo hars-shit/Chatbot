@@ -25,18 +25,24 @@ const ChatbotContainer = () => {
     }
   }, []);
 
-  // Message handling from iframe
   useEffect(() => {
-    const handleMessage = (event) => {
-      const { chatbotClosed, expend, triggerPopup } = event.data || {};
-      if (chatbotClosed) setChatVisible(false);
-      if (typeof expend === 'boolean') setExpend(expend);
-      if (triggerPopup) setChatVisible(true);
+    const isDesktopSizedIframe = () => {
+      const width = containerRef.current?.offsetWidth || 0;
+      return width >= 400;
     };
-
-    window.addEventListener('message', handleMessage);
-    return () => window.removeEventListener('message', handleMessage);
+  
+    const hasPopupShown = sessionStorage.getItem('chatbotAutoPopupShown');
+  
+    if (isDesktopSizedIframe() && !hasPopupShown) {
+      const timer = setTimeout(() => {
+        setChatVisible(true);
+        sessionStorage.setItem('chatbotAutoPopupShown', 'true');
+      }, 9000);
+  
+      return () => clearTimeout(timer);
+    }
   }, []);
+  
 
   const handleToggleClick = () => setChatVisible((prev) => !prev);
 
