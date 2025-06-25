@@ -42,29 +42,33 @@ const Chatbot = () => {
 
   const [input, setInput] = useState('');
   const [expend,setExpend]=useState(false);
-  // const [showHeader, setShowHeader] = useState(true);
+  
   const [botVisible, setBotVisible] = useState(true);
-  // const [contactId,setContactId]=useState(()=>{
-  //   return localStorage.getItem('mortem_contact_id') || null ;
-  // })
+
   const [contactId, setContactId] = useState(null);
 
-
-  // adding a unique string inn the last_name 
-  // const getIPAddress = async () => {
-  //   try {
-  //     const res = await fetch("https://api.ipify.org?format=json");
-  //     const data = await res.json();
-  //     return data.ip;
-  //   } catch {
-  //     return "unknown_ip";
-  //   }
-  // };
   
 
   const get_unique_key = () => {
     return Math.random().toString(36).substring(2, 8)
   }
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight
+  });
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+  
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  
   useEffect(() => {
     const handleMessage = (event) => {
       if (event.data?.openChatbot) {
@@ -223,7 +227,14 @@ const Chatbot = () => {
   return (
     botVisible &&
     <div className='main-container'>
-      <div className='chatbot-main-container' style={expend ? {width:"100%",height:"100%"} : {}}>
+      <div className='chatbot-main-container' style={expend ? {
+          width: `${windowSize.width}px`,
+          height: `${windowSize.height}px`,
+          position: "fixed",
+          top: 0,
+          left: 0,
+          zIndex: 9999
+        } : {}}>
 
         <div className="chatbot-wrapper">
           <div className="chatbot-header">
@@ -326,16 +337,7 @@ const Chatbot = () => {
 
 
       </div>
-      {/* <div className='close-bot-container'>
-        <button className="close-bot-button" onClick={() => setBotVisible(pre => !pre)}>
-          {
-            botVisible ?
-              <MdOutlineKeyboardArrowDown />
-              :
-             <img style={{width:"25px",height:"25px"}} src="./Black.png" alt="" />
-          }
-        </button>
-      </div> */}
+     
     </div>
 
 
