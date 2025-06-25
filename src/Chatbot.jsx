@@ -309,7 +309,7 @@ const Chatbot = () => {
           <div className="chatbot-input">
             <div className='inside-bot'>
               <input
-                style={{ fontSize: "18px" }}
+                style={{ fontSize: "16px" }}
                 type="text"
                 placeholder="Type your message here..."
                 value={input}
