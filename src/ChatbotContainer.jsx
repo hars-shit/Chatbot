@@ -24,6 +24,10 @@ const ChatbotContainer = () => {
       return () => clearTimeout(timer);
     }
   }, []);
+  useEffect(() => {
+    window.parent.postMessage({ chatbotVisible: chatVisible }, '*');
+  }, [chatVisible]);
+  
 
   useEffect(() => {
     const isDesktopSizedIframe = () => {
