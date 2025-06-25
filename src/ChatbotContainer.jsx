@@ -1,4 +1,3 @@
-// ChatbotContainer.jsx
 import React, { useEffect, useRef, useState } from 'react';
 import Chatbot from './Chatbot';
 import './chatbotContainer.css';
@@ -10,18 +9,23 @@ const ChatbotContainer = () => {
 
   useEffect(() => {
     const isDesktopSizedIframe = () => {
-      // Measure iframe container size directly
       const width = containerRef.current?.offsetWidth || 0;
-      return width >= 400; // Adjust this threshold as needed
+      return width >= 400;
     };
 
-    if (isDesktopSizedIframe()) {
-      const timer = setTimeout(() => setChatVisible(true), 9000);
+    const hasPopupShown = localStorage.getItem('chatbotAutoPopupShown');
+
+    if (isDesktopSizedIframe() && !hasPopupShown) {
+      const timer = setTimeout(() => {
+        setChatVisible(true);
+        localStorage.setItem('chatbotAutoPopupShown', 'true');
+      }, 9000);
+
       return () => clearTimeout(timer);
     }
   }, []);
 
-  // Message handling
+  // Message handling from iframe
   useEffect(() => {
     const handleMessage = (event) => {
       const { chatbotClosed, expend, triggerPopup } = event.data || {};
@@ -44,10 +48,12 @@ const ChatbotContainer = () => {
           className="chat-visible"
           style={{ width: expend ? '100vw' : '' }}
         >
-          <Chatbot setExpend={setExpend} 
-           expend={expend}
-           botVisible={chatVisible}
-          setBotVisible={setChatVisible} />
+          <Chatbot
+            setExpend={setExpend}
+            expend={expend}
+            botVisible={chatVisible}
+            setBotVisible={setChatVisible}
+          />
         </div>
       )}
 
