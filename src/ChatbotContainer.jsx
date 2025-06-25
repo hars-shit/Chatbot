@@ -7,60 +7,55 @@ const ChatbotContainer = () => {
   const [expend, setExpend] = useState(false);
   const containerRef = useRef(null);
 
-  // 🔁 One-time auto popup logic
+  // 🔁 One-time auto popup after 9s
   useEffect(() => {
-    const isDesktopSizedIframe = () => {
-      const width = containerRef.current?.offsetWidth || 0;
-      return width >= 400;
-    };
+    const isLarge = containerRef.current?.offsetWidth >= 400;
+    const hasShown = sessionStorage.getItem('chatbotAutoPopupShown');
 
-    // Run only once if not shown yet
-    const hasPopupShown = sessionStorage.getItem('chatbotAutoPopupShown');
-
-    if (isDesktopSizedIframe() && !hasPopupShown) {
+    if (isLarge && !hasShown) {
       const timer = setTimeout(() => {
         setChatVisible(true);
-        sessionStorage.setItem('chatbotAutoPopupShown', true);
-      }, 9000); // ⏱ 9 seconds
-
-      return () => clearTimeout(timer); // cleanup
+        sessionStorage.setItem('chatbotAutoPopupShown', 'true');
+      }, 9000);
+      return () => clearTimeout(timer);
     }
   }, []);
 
-  // 📤 Send chatbotVisible state to parent
+  // 📤 Send chatbotVisible to parent for resizing
   useEffect(() => {
     window.parent.postMessage({ chatbotVisible: chatVisible }, '*');
+    console.log('[Chatbot] postMessage sent:', chatVisible);
   }, [chatVisible]);
 
-  // 👇 Toggle on click
-  const handleToggleClick = () => setChatVisible((prev) => !prev);
+  // 👇 Toggle manually
+  const handleToggleClick = () => {
+    setChatVisible((prev) => !prev);
+  };
 
   return (
     <div ref={containerRef}>
-      {chatVisible && (
-        <div
-          id="chat-widget"
-          className="chat-visible"
-          style={{ width: expend ? '100vw' : '' }}
-        >
-          <Chatbot
-            setExpend={setExpend}
-            expend={expend}
-            botVisible={chatVisible}
-            setBotVisible={setChatVisible}
-          />
-        </div>
-      )}
+      {/* ✅ Always render to keep iframe interaction alive */}
+      <div id="chat-widget" style={{ display: 'block' }}>
+        <Chatbot
+          setExpend={setExpend}
+          expend={expend}
+          botVisible={chatVisible}
+          setBotVisible={setChatVisible}
+        />
+      </div>
 
+      {/* 💬 Floating toggle button */}
       <div
         id="chat-toggle"
         className={chatVisible ? 'tooltip-hidden' : ''}
         onClick={handleToggleClick}
+        style={{ cursor: 'pointer', position: 'fixed', bottom: '20px', right: '20px', zIndex: 10000 }}
       >
         <div className="tooltip">Chat with Sarah</div>
         <img
           src="https://storage.googleapis.com/msgsndr/anzT2So2oHAxu8AgUsf9/media/685552f41a74cd7572683608.png"
           alt="logo-chatbot"
+          style={{ width: '60px', height: '60px' }}
         />
       </div>
     </div>
