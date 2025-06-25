@@ -80,10 +80,7 @@ const Chatbot = ({ expend, setExpend, botVisible, setBotVisible}) => {
     const userId = Date.now();
     const loaderId = "loader-" + Date.now();
 
-    // setMessages(prev => [
-    //   ...prev,
-    //   { id: userId, type: 'user', text: userMessage, time: userTime }
-    // ]);
+   
     setMessages(prev => [
       ...prev,
       { id: userId, type: 'user', text: userMessage, time: userTime },
@@ -91,7 +88,7 @@ const Chatbot = ({ expend, setExpend, botVisible, setBotVisible}) => {
     ]);
     setInput('');
 
-    // const ip = await getIPAddress();
+    
     const unique_key = get_unique_key()
     const basePayload = {
       // payload data
@@ -180,6 +177,7 @@ const Chatbot = ({ expend, setExpend, botVisible, setBotVisible}) => {
   const handleClose = () => {
    
     window.parent.postMessage({ chatbotClosed: true }, "*");
+    setBotVisible(false)
   }
 
   const formatBotText = (text) => {
