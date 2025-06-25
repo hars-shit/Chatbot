@@ -6,33 +6,40 @@ import './chatbotContainer.css';
 const ChatbotContainer = () => {
   const [chatVisible, setChatVisible] = useState(false);
   const [expend, setExpend] = useState(false);
+  const [shouldAutoPopup, setShouldAutoPopup] = useState(false);
 
-  const [isDesktop, setIsDesktop] = useState(true);
-
+  // Check parent window width (if not cross-origin restricted)
   useEffect(() => {
-    // Determine screen size safely (works in iframe too)
-    const checkIsDesktop = () => {
-      setIsDesktop(window.innerWidth > 480);
+    const checkParentIsDesktop = () => {
+      try {
+        const parentWidth = window.top.innerWidth;
+        setShouldAutoPopup(parentWidth > 480);
+      } catch (e) {
+        // Fallback to iframe size if cross-origin
+        setShouldAutoPopup(window.innerWidth > 480);
+      }
     };
 
-    checkIsDesktop(); // initial check
-    window.addEventListener('resize', checkIsDesktop);
-
-    return () => window.removeEventListener('resize', checkIsDesktop);
+    checkParentIsDesktop();
+    window.addEventListener("resize", checkParentIsDesktop);
+    return () => window.removeEventListener("resize", checkParentIsDesktop);
   }, []);
 
+  // 9 second auto-popup if allowed
   useEffect(() => {
-    if (isDesktop) {
+    if (shouldAutoPopup) {
       const timer = setTimeout(() => setChatVisible(true), 9000);
       return () => clearTimeout(timer);
     }
-  }, [isDesktop]);
+  }, [shouldAutoPopup]);
 
+  // Handle postMessage from iframe if any
   useEffect(() => {
     const handleMessage = (event) => {
-      const { chatbotClosed, expend } = event.data || {};
+      const { chatbotClosed, expend, triggerPopup } = event.data || {};
       if (chatbotClosed) setChatVisible(false);
       if (typeof expend === 'boolean') setExpend(expend);
+      if (triggerPopup) setChatVisible(true);
     };
 
     window.addEventListener("message", handleMessage);
