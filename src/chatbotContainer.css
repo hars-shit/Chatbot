@@ -50,6 +50,7 @@ html {
   bottom: 55px;
   left: 0%;
   transform: translateX(-50%);
+  background: linear-gradient(105deg, #4b6cb7, #182848);
   color: #fff;
   padding: 8px 14px;
   border-radius: 8px;
