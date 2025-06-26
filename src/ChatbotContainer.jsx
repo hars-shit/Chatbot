@@ -18,18 +18,18 @@ const ChatbotContainer = () => {
         console.log('[Chatbot] Triggering auto-popup after 9s');
         setChatVisible(true);
         sessionStorage.setItem('chatbotAutoPopupShown', 'true');
-      }, 9000); // ⏱ 9 seconds
+      }, 9000); 
 
-      return () => clearTimeout(timer); // 🧹 Cleanup if unmounted
+      return () => clearTimeout(timer);
     }
   }, []);
 
-  // 📤 Send chatbotVisible state to parent (postMessage)
+
   useEffect(() => {
     window.parent.postMessage({ chatbotVisible: chatVisible }, '*');
   }, [chatVisible]);
 
-  // 👇 Manual toggle click
+
   const handleToggleClick = () => {
     setChatVisible((prev) => !prev);
   };
