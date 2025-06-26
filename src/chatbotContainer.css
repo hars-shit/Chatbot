@@ -27,11 +27,10 @@ html {
   border-radius: 50%;
 }
 
-/* Stronger hover effect */
+
 #chat-toggle:hover {
-  animation: none; /* Disable idle on hover */
+  animation: none;
   transform: scale(1.2);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
@@ -51,7 +50,6 @@ html {
   bottom: 55px;
   left: 0%;
   transform: translateX(-50%);
-  background: linear-gradient(105deg, #4b6cb7, #182848);
   color: #fff;
   padding: 8px 14px;
   border-radius: 8px;
