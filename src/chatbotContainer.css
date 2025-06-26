@@ -49,9 +49,9 @@ html {
 .tooltip {
   position: absolute;
   bottom: 55px;
-  left: 10%;
+  left: 0%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, #4b6cb7, #182848);
+  background: linear-gradient(105deg, #4b6cb7, #182848);
   color: #fff;
   padding: 8px 14px;
   border-radius: 8px;
