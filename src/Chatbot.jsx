@@ -195,22 +195,21 @@ const Chatbot = ({ expend, setExpend, botVisible, setBotVisible}) => {
     if (e.key === 'Enter') sendMessage();
   };
   const [windowSize, setWindowSize] = useState({
-    width: 0,
-    height: 0
+    width: window.innerWidth,
+    height: window.innerHeight
   });
-
-  // ✅ Listen for actual device size from parent
-  useEffect(() => {
-    const handleMessage = (event) => {
-      const data = event.data;
-      if (data?.type === 'device-size') {
-        setWindowSize({ width: data.width, height: data.height });
-      }
-    };
-    window.addEventListener('message', handleMessage);
-    return () => window.removeEventListener('message', handleMessage);
-  }, []);
   
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+  
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   
 
   return (
@@ -220,14 +219,14 @@ const Chatbot = ({ expend, setExpend, botVisible, setBotVisible}) => {
 
         <div className="chatbot-wrapper">
           <div className="chatbot-header">
-          {windowSize.width > 768 && (
+          {/* {windowSize.width > 768 && (
   <div className='chatbot-header-1' onClick={() => setExpend(pre => !pre)}>
     <CgExpand style={{ color: "white", fontSize: "22px" }} />
   </div>
-)}
- {/* <div className='chatbot-header-1' onClick={() => setExpend(pre => !pre)}>
+)} */}
+ <div className='chatbot-header-1' onClick={() => setExpend(pre => !pre)}>
     <CgExpand style={{ color: "white", fontSize: "22px" }} />
-  </div> */}
+  </div>
 
           <div className='chatbot-header-2'>
             <div className='section-1'>
