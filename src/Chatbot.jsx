@@ -234,7 +234,7 @@ const Chatbot = ({ expend, setExpend, botVisible, setBotVisible}) => {
                 <img src="./sarah.png" alt="Sarah" style={{ objectFit:"cover",objectPosition:"50% 15%",width: "40px", height: "40px", borderRadius: "50%" }} />
               </div>
               <div>
-                <h3 style={{ fontSize: "24px", margin: 0 }}>Sarah</h3>
+                <h3 style={{ fontSize: "18px", margin: 0 }}>Sarah</h3>
                 <span className="chatbot-status">● AI Assistant</span>
               </div>
             </div>
