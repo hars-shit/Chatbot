@@ -23,7 +23,7 @@ const ChatbotContainer = () => {
     }
   }, []);
 
-  // Communicate visibility and expansion to parent
+  
   useEffect(() => {
     window.parent.postMessage(
       { chatbotVisible: chatVisible, chatbotExpend: expend },
