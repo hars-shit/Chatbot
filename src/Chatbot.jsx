@@ -219,14 +219,9 @@ const Chatbot = ({ expend, setExpend, botVisible, setBotVisible}) => {
 
         <div className="chatbot-wrapper">
           <div className="chatbot-header">
-          {/* {windowSize.width > 768 && (
-  <div className='chatbot-header-1' onClick={() => setExpend(pre => !pre)}>
+ {/* <div className='chatbot-header-1' onClick={() => setExpend(pre => !pre)}>
     <CgExpand style={{ color: "white", fontSize: "22px" }} />
-  </div>
-)} */}
- <div className='chatbot-header-1' onClick={() => setExpend(pre => !pre)}>
-    <CgExpand style={{ color: "white", fontSize: "22px" }} />
-  </div>
+  </div> */}
 
           <div className='chatbot-header-2'>
             <div className='section-1'>
@@ -241,7 +236,7 @@ const Chatbot = ({ expend, setExpend, botVisible, setBotVisible}) => {
 
 
             <div className='section-1'  >
-
+            <CgExpand style={{ color: "white", fontSize: "22px",cursor:"pointer" }} onClick={() => setExpend(pre => !pre)}/>
 
               <div className="circle-toggle" onClick={() => handleClose()}>
                 <FaMinus fontSize="10px" />
