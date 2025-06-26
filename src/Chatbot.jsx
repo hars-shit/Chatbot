@@ -195,10 +195,11 @@ const Chatbot = ({ expend, setExpend, botVisible, setBotVisible}) => {
     if (e.key === 'Enter') sendMessage();
   };
   const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight
+    width: 0,
+    height: 0
   });
-  
+
+  // ✅ Listen for actual device size from parent
   useEffect(() => {
     const handleMessage = (event) => {
       const data = event.data;
@@ -206,7 +207,6 @@ const Chatbot = ({ expend, setExpend, botVisible, setBotVisible}) => {
         setWindowSize({ width: data.width, height: data.height });
       }
     };
-  
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
   }, []);
