@@ -200,16 +200,17 @@ const Chatbot = ({ expend, setExpend, botVisible, setBotVisible}) => {
   });
   
   useEffect(() => {
-    const handleResize = () => {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
+    const handleMessage = (event) => {
+      const data = event.data;
+      if (data?.type === 'device-size') {
+        setWindowSize({ width: data.width, height: data.height });
+      }
     };
   
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
   }, []);
+  
   
 
   return (
