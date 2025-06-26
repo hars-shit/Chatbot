@@ -121,7 +121,7 @@ html {
 .chatbot-status {
   font-size: 13px;
   font-weight: 400;
-  color: var(--primary-text-color);
+  color:#10bc10;
 }
 
 .talk-bubble {
