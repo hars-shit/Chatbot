@@ -215,7 +215,7 @@ const Chatbot = ({ expend, setExpend, botVisible, setBotVisible}) => {
   return (
     botVisible &&
     <div className='main-container'>
-      <div className='chatbot-main-container' style={expend ? {width:"100%",height:"100%"} : {}}>
+      <div className='chatbot-main-container'>
 
         <div className="chatbot-wrapper">
           <div className="chatbot-header">
