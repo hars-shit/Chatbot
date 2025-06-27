@@ -87,7 +87,7 @@ html {
 }
 
 .chatbot-header {
-  box-shadow: 0px 24px 34px 0px rgba(174, 10, 10, 0.45);
+  box-shadow: 0px 24px 34px 0px #06c506a6;
   background: var(--primary-bg-color);
   color: white;
   display: flex;
