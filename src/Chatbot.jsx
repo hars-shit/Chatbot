@@ -23,7 +23,7 @@ const Chatbot = ({ expend, setExpend, botVisible, setBotVisible}) => {
     {
       id: Date.now(),
       type: 'bot',
-      text: "Hi, I’m Sarah, the Chippewa Valley assistant. I can help with immediate needs, planning ahead, finding obituaries, or answering general questions.",
+      text: "I'm here to attend to immediate need situations or simply provide empathic education. Chat with me or click on a topic below.",
       time: getTime(),
     },
     {
