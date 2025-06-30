@@ -23,7 +23,7 @@ const Chatbot = ({ expend, setExpend, botVisible, setBotVisible}) => {
     {
       id: Date.now(),
       type: 'bot',
-      text: "I'm here to attend to immediate need situations or simply provide empathic education. Chat with me or click on a topic below.",
+      text: "I’m here to attend to your immediate need situations and provide empathetic guidance. Chat with me or click on a topic below.",
       time: getTime(),
     },
     {
