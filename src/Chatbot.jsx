@@ -32,7 +32,7 @@ const Chatbot = ({ expend, setExpend, botVisible, setBotVisible}) => {
       text: "",
       options: [
         "A loved one just passed",
-        "I’m planning for the future",
+        "Learn about pre-planning",
         "Find an obituary",
         "I have a general question"
       ],
