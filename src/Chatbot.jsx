@@ -10,7 +10,7 @@ import { CgExpand } from 'react-icons/cg';
 const getTime = () =>
   new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-const Chatbot = ({ expend, setExpend, botVisible, setBotVisible}) => {
+const Chatbot = ({ expend, setExpend, botVisible, setBotVisible,messages,setMessages,contactId,setContactId}) => {
   const bodyRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -19,32 +19,32 @@ const Chatbot = ({ expend, setExpend, botVisible, setBotVisible}) => {
     }
   };
 
-  const [messages, setMessages] = useState([
-    {
-      id: Date.now(),
-      type: 'bot',
-      text: "I'm here to attend to any need or situation you might have and provide you with guidance.",
-      time: getTime(),
-    },
-    {
-      id: Date.now(),
-      type: 'bot',
-      text: "",
-      options: [
-        "A loved one just passed",
-        "Learn about pre-planning",
-        "Find an obituary",
-        "I have a general question"
-      ],
-      time: getTime(),
-    }
-  ]);
+  // const [messages, setMessages] = useState([
+  //   {
+  //     id: Date.now(),
+  //     type: 'bot',
+  //     text: "I'm here to attend to any need or situation you might have and provide you with guidance.",
+  //     time: getTime(),
+  //   },
+  //   {
+  //     id: Date.now(),
+  //     type: 'bot',
+  //     text: "",
+  //     options: [
+  //       "A loved one just passed",
+  //       "Learn about pre-planning",
+  //       "Find an obituary",
+  //       "I have a general question"
+  //     ],
+  //     time: getTime(),
+  //   }
+  // ]);
 
   const [input, setInput] = useState('');
 
  
 
-  const [contactId, setContactId] = useState(null);
+  // const [contactId, setContactId] = useState(null);
 
   
 

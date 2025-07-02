@@ -6,7 +6,29 @@ const ChatbotContainer = () => {
   const [chatVisible, setChatVisible] = useState(false);
   const [expend, setExpend] = useState(false);
   const containerRef = useRef(null);
-
+  const [contactId, setContactId] = useState(null);
+  const getTime = () =>
+    new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const [messages, setMessages] = useState([
+    {
+      id: Date.now(),
+      type: 'bot',
+      text: "I'm here to attend to any need or situation you might have and provide you with guidance.",
+      time: getTime(),
+    },
+    {
+      id: Date.now(),
+      type: 'bot',
+      text: "",
+      options: [
+        "A loved one just passed",
+        "Learn about pre-planning",
+        "Find an obituary",
+        "I have a general question"
+      ],
+      time: getTime(),
+    }
+  ]);
   // Auto popup after 9s
   useEffect(() => {
     const hasPopupShown = sessionStorage.getItem('chatbotAutoPopupShown');
@@ -40,6 +62,10 @@ const ChatbotContainer = () => {
       {chatVisible && (
         <div id="chat-widget" className="chat-visible">
           <Chatbot
+          messages={messages}
+          setMessages={setMessages}
+          contactId={contactId}
+          setContactId={setContactId}
             setExpend={setExpend}
             expend={expend}
             botVisible={chatVisible}
