@@ -1,6 +1,4 @@
-<!-- FINAL EMBADED CODE JULY 7 -->
-
-<!-- <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -22,13 +20,13 @@
       overflow: hidden;
     }
 
-    /* Initial: hidden/minimized */
+  
     #chat-widge.minimized {
       width: 150px;
       height: 120px;
     }
 
-    /* Normal (chat open) */
+   
     #chat-widge.normal {
       width: 400px;
       height: 100%;
@@ -71,7 +69,7 @@
 </head>
 <body>
 
-  <!-- Chatbot container -->
+ 
   <div id="chat-widge" class="minimized">
     <iframe
       src="https://staging.d26589d0nqbvmg.amplifyapp.com/"
@@ -80,7 +78,7 @@
     ></iframe>
   </div>
 
-  <!-- Listener to toggle chatbot size -->
+
   <script>
     window.addEventListener('message', (event) => {
       const data = event.data;
@@ -104,4 +102,4 @@
   </script>
 
 </body>
-</html> -->
+</html> 
